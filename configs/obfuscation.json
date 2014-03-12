@@ -1,0 +1,24 @@
+{
+    "connection":{ 
+        "access_key":"YOUR_ACCESS_KEY",
+        "secret_key":"YOUR_SECRET_KEY",
+        "server":"api.jscrambler.com",
+        "port":"443"
+    },
+    
+    "files":[
+        "index.html",
+        "script.js"
+    ],
+    
+    "parameters":{
+        "string_splitting":"%DEFAULT%",
+        "function_reorder":"%DEFAULT%",
+	"function_outlining":"%DEFAULT%",
+	"dot_notation_elimination":"%DEFAULT%",
+	"expiration_date":"2199-01-01",
+	"rename_local":"%DEFAULT%",
+	"whitespace":"%DEFAULT%",
+	"literal_duplicates":"%DEFAULT%"
+    }
+}

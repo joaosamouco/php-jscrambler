@@ -1,0 +1,20 @@
+{
+    "connection":{ 
+        "access_key":"YOUR_ACCESS_KEY",
+        "secret_key":"YOUR_SECRET_KEY",
+        "server":"api.jscrambler.com",
+        "port":"443"
+    },
+
+    "files":[
+        "index.html",
+        "script.js"
+    ],
+
+    "parameters":{
+	"rename_local":"%DEFAULT%",
+	"whitespace":"%DEFAULT%",
+	"literal_duplicates":"%DEFAULT%",
+	"dictionary_compression":"%DEFAULT%"
+    }
+}
