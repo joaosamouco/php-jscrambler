@@ -1,3 +1,9 @@
 #!/usr/bin/php
 <?php
-require_once __DIR__.DIRECTORY_SEPARATOR.'jscrambler.php';
+require_once __DIR__.DIRECTORY_SEPARATOR . 'jscrambler.php';
+
+if ($argc < 2 || $argc > 2) {
+	throw new Exception(sprintf('Usage: %s [path_to_config.json]', $argv[0]));
+}
+
+JScramblerFacade::process($argv[1]);

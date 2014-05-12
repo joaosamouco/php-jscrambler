@@ -24,14 +24,18 @@ class Jscrambler {
     private $api_port = 80;
     private $api_version = null;
 
-    public function __construct($access_key, $secret_key, $api_host = null, $api_port = null) {
+    public function __construct($access_key, $secret_key, $api_host = null, $api_port = null, $api_version = 3) {
         $this->access_key = $access_key;
         $this->secret_key = $secret_key;
         if ($api_host !== null)
             $this->api_host = $api_host;
         if ($api_port !== null)
             $this->api_port = $api_port;
-        $this->api_version = 3;
+        if ($api_version === null) {
+            $this->api_version = 3;
+        } else {
+            $this->api_version = $api_version;
+        }
     }
 
     public function get($resource_path, $params = array()) {
