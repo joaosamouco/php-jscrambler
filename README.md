@@ -6,7 +6,7 @@ php-jscrambler
 2. Copy the pre-defined configuration file that best suite your needs and add
    there your API credentials and files list.
 
-3. Run the client (CLI)
+3. Run the client
 
    Linux
    -----
