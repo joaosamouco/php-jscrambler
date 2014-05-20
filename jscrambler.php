@@ -17,7 +17,7 @@ class JScramblerFacade {
   // True if no console log output is intended.
   public static $silent = false;
   // Shortcut to the JScrambler HTTP client.
-  public static Client = Jscrambler;
+  public static $Client = Jscrambler;
   // Downloads a project. It returns the content of a Zip file.
   public static function downloadCode ($client, $projectId, $sourceId = null) {
     self::pollProject($client, $projectId);
