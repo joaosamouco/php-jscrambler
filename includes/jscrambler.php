@@ -78,6 +78,7 @@ class Jscrambler {
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $request_method);
         curl_setopt($curl, CURLOPT_PORT, $this->api_port);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 0);
 
 
         /* $transfer = array("transfer" => curl_exec($curl),
