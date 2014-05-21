@@ -142,7 +142,7 @@ class JScramblerFacade {
     $files = $config->filesSrc;
     $filesSrc = array();
     for ($i = 0, $l = count($files); $i < $l; ++$i) {
-      $filesSrc = array_merge(glob($files[$i]), $filesSrc);
+      $filesSrc = array_merge(self::globRecursive($files[$i]), $filesSrc);
     }
     // Prepare object to post
     // Check if params were provided and assign them to a variable
@@ -208,5 +208,13 @@ class JScramblerFacade {
     $zip->open(self::ZIP_TMP_FILE);
     $zip->extractTo($dest);
     self::cleanZipFile();
+  }
+  // Recursive apply a glob pattern
+  protected static function globRecursive ($pattern, $flags = 0) {
+    $files = glob($pattern, $flags);
+    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+      $files = array_merge($files, self::globRecursive($dir.'/'.basename($pattern), $flags));
+    }
+    return $files;
   }
 }
