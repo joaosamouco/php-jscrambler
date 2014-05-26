@@ -197,14 +197,22 @@ class JScramblerFacade {
   }
   // Zips a project to a temporary file.
   protected static function zipProject ($files) {
+    $hasFiles = false;
     if (count($files) === 1 && '.zip' === substr($files[0], -4, 4)) {
+      $hasFiles = true;
       copy($files[0], self::ZIP_TMP_FILE);
     } else {
       $zip = new ZipArchive();
       $zip->open(self::ZIP_TMP_FILE, ZipArchive::CREATE);
       foreach ($files as $file) {
+        if (!$hasFiles && is_file($file)) {
+          $hasFiles = true;
+        }
         $zip->addFile($file);
       }
+    }
+    if (!$hasFiles) {
+      throw new Exception('No source files found. If you intend to send a whole directory sufix your path with "**" (e.g. ./my-directory/**)');
     }
   }
   // Unzips a project into the given destination.
