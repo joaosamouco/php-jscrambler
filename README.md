@@ -10,13 +10,13 @@ php-jscrambler
 
    Linux
    -----
-   > $ ./jscrambler /destination/directory/ /your/configuration/file.json
+   > $ ./jscrambler /your/configuration/file.json
 
    OR
 
    Windows
    -------
-   > jscrambler.bat c:\destination\directory c:\your\configuration\file.json
+   > jscrambler.bat c:\your\configuration\file.json
 
    OR
 
