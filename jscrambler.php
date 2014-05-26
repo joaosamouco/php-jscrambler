@@ -74,6 +74,10 @@ class JScramblerFacade {
     if (!self::$silent) {
       echo "Uploading project...\n";
     }
+    // Zip all the files before uploading
+    self::zipProject($params['files']);
+    $params['files'] = array(self::ZIP_TMP_FILE);
+    // Upload
     $response = $client->post('/code.json', $params);
     $result = json_decode($response);
     if (empty($result)) {
@@ -151,9 +155,7 @@ class JScramblerFacade {
     } else {
       $params = array();
     }
-    // Zip all the files before uploading
-    self::zipProject($filesSrc);
-    $params['files'] = array(self::ZIP_TMP_FILE);
+    $params['files'] = $filesSrc;
     // Send the project to the JScrambler API
     $projectId = self::uploadCode($client, $params)->id;
     // Clean the temporary zip file
@@ -195,10 +197,14 @@ class JScramblerFacade {
   }
   // Zips a project to a temporary file.
   protected static function zipProject ($files) {
-    $zip = new ZipArchive();
-    $zip->open(self::ZIP_TMP_FILE, ZipArchive::CREATE);
-    foreach ($files as $file) {
-      $zip->addFile($file);
+    if (count($files) === 1 && '.zip' === substr($files[0], -4, 4)) {
+      copy($files[0], self::ZIP_TMP_FILE);
+    } else {
+      $zip = new ZipArchive();
+      $zip->open(self::ZIP_TMP_FILE, ZipArchive::CREATE);
+      foreach ($files as $file) {
+        $zip->addFile($file);
+      }
     }
   }
   // Unzips a project into the given destination.
@@ -212,7 +218,7 @@ class JScramblerFacade {
   // Recursive apply a glob pattern
   protected static function globRecursive ($pattern, $flags = 0) {
     $files = glob($pattern, $flags);
-    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+    foreach (glob(dirname($pattern).'/*') as $dir) {
       $files = array_merge($files, self::globRecursive($dir.'/'.basename($pattern), $flags));
     }
     return $files;
