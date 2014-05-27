@@ -121,6 +121,7 @@ class Jscrambler {
         $auth_params = $params;
         $auth_params['timestamp'] = $timestamp ? $timestamp : date('c');
         $auth_params['access_key'] = $this->access_key;
+        $auth_params['user_agent'] = 'PHP';
         $auth_params['signature'] = $this->generate_hmac_signature($request_method, $resource_path, $auth_params);
 
         return $auth_params;
