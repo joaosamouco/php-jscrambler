@@ -31,6 +31,25 @@ Requirements
 PHP 5.2.x or above (http://php.net/downloads.php)
 libcurl (http://pt.php.net/manual/en/curl.requirements.php)
 
+Configuration
+-------------
+Your JScrambler's project configuration is achieved through a JSON file with the following structure:
+```json
+{
+  "filesSrc": ["index.js", "lib/**/*.js"],
+  "filesDest": "dist/",
+  "keys": {
+    "accessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "secretKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  },
+  "params": {
+    "rename_local": "%DEFAULT%",
+    "whitespace": "%DEFAULT%",
+    "literal_duplicates": "%DEFAULT%"
+  }
+}
+```
+
 API
 ---
 All of the API operations are wrapped in a static facade with the following properties/methods:
@@ -83,25 +102,6 @@ JScramblerFacade::deleteCode($client, PROJECT_ID);
 Common use case when using the client. First it uploads a project, then it polls the server to download and finally it unzips the project into a folder.
 ```php
 JScramblerFacade::process('config.json');
-```
-
-Configuration
--------------
-Your JScrambler's project configuration is achieved through a JSON file with the following structure:
-```json
-{
-  "filesSrc": ["index.js", "lib/**/*.js"],
-  "filesDest": "dist/",
-  "keys": {
-    "accessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    "secretKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-  },
-  "params": {
-    "rename_local": "%DEFAULT%",
-    "whitespace": "%DEFAULT%",
-    "literal_duplicates": "%DEFAULT%"
-  }
-}
 ```
 
 ### Options
