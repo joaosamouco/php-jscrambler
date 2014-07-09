@@ -16,8 +16,6 @@ class JScramblerFacade {
   const ZIP_TMP_FILE = '.tmp.zip';
   // True if no console log output is intended.
   public static $silent = false;
-  // Shortcut to the JScrambler HTTP client.
-  public static $Client = Jscrambler;
   // Downloads a project. It returns the content of a Zip file.
   public static function downloadCode ($client, $projectId, $sourceId = null) {
     self::pollProject($client, $projectId);
@@ -169,7 +167,7 @@ class JScramblerFacade {
     if (!self::$silent) {
       echo "Written\n";
     }
-    if ($config->deleteProject) {
+    if (isset($config->deleteProject) && $config->deleteProject) {
       self::deleteCode($client, $projectId);
     }
   }
