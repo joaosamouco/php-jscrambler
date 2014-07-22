@@ -7,6 +7,8 @@
 //
 
 require_once 'includes/jscrambler.php';
+require_once 'includes/path.php';
+require_once 'includes/globstar.php';
 
 // Synchronous facade with JScrambler common operations.
 class JScramblerFacade {
@@ -144,7 +146,7 @@ class JScramblerFacade {
     $files = $config->filesSrc;
     $filesSrc = array();
     for ($i = 0, $l = count($files); $i < $l; ++$i) {
-      $filesSrc = array_merge(self::globRecursive($files[$i]), $filesSrc);
+      $filesSrc = array_merge(globstar($files[$i]), $filesSrc);
     }
     // Prepare object to post
     // Check if params were provided and assign them to a variable
@@ -206,6 +208,10 @@ class JScramblerFacade {
         if (!$hasFiles && is_file($file)) {
           $hasFiles = true;
         }
+        $file = normalize_path($file);
+        if (strpos($file, '../') === 0) {
+          $file = realpath($file);
+        }
         $zip->addFile($file);
       }
     }
@@ -220,13 +226,5 @@ class JScramblerFacade {
     $zip->open(self::ZIP_TMP_FILE);
     $zip->extractTo($dest);
     self::cleanZipFile();
-  }
-  // Recursive apply a glob pattern
-  protected static function globRecursive ($pattern, $flags = 0) {
-    $files = glob($pattern, $flags);
-    foreach (glob(dirname($pattern).'/*') as $dir) {
-      $files = array_merge($files, self::globRecursive($dir.'/'.basename($pattern), $flags));
-    }
-    return $files;
   }
 }
