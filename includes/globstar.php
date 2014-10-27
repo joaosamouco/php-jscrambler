@@ -1,5 +1,6 @@
 <?php
 /**
+ * @see https://github.com/auditmark/php-jscrambler/blob/master/includes/globstar.php
  * @see https://github.com/michaldudek/Foundation/blob/master/src/MD/Foundation/Utils/FilesystemUtils.php
  */
 if (!function_exists('globstar')) :
@@ -44,7 +45,7 @@ function globstar($pattern, $flags = 0) {
   $rootPattern = substr($pattern, 0, $pos) .'*';
   $restPattern = substr($pattern, $pos + 2);
 
-  $patterns[] = $restPattern;
+  $patterns[] = ltrim($restPattern, '/');
 
   while($dirs = glob($rootPattern, GLOB_ONLYDIR)) {
     $rootPattern = $rootPattern .'/*';
