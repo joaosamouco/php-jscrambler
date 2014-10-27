@@ -1,5 +1,6 @@
 <?php
 /**
+ * @see https://github.com/auditmark/php-jscrambler/blob/master/includes/globstar.php
  * @see https://github.com/michaldudek/Foundation/blob/master/src/MD/Foundation/Utils/FilesystemUtils.php
  */
 if (!function_exists('globstar')) :
@@ -39,29 +40,25 @@ function globstar($pattern, $flags = 0) {
     }
   }
 
-  $files = array();
-
   $pos = stripos($pattern, '**');
 
   $rootPattern = substr($pattern, 0, $pos) .'*';
   $restPattern = substr($pattern, $pos + 2);
 
-  while($dirs = glob($rootPattern)) {
+  $patterns[] = ltrim($restPattern, '/');
+
+  while($dirs = glob($rootPattern, GLOB_ONLYDIR)) {
     $rootPattern = $rootPattern .'/*';
 
     foreach($dirs as $dir) {
-      if (is_dir($dir)) {
-        $patterns[] = $dir . $restPattern;
-      } else {
-        $files[] = $dir;
-      }
+      $patterns[] = $dir . $restPattern;
     }
   }
 
+  $files = array();
+
   foreach($patterns as $pat) {
-    if (!is_dir($pat)) {
-      $files = array_merge($files, globstar($pat, $flags));
-    }
+    $files = array_merge($files, globstar($pat, $flags));
   }
 
   $files = array_unique($files);
