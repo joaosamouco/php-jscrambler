@@ -70,6 +70,9 @@ class Jscrambler {
 
         $curl = curl_init($url);
         if ($signed_data) {
+            if (!empty(CURLOPT_SAFE_UPLOAD)) {
+                curl_setopt($curl, CURLOPT_SAFE_UPLOAD, 0);
+            }
             curl_setopt($curl, CURLOPT_POST, 1);
             @curl_setopt($curl, CURLOPT_POSTFIELDS, $signed_data);
         }

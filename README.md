@@ -16,7 +16,7 @@ php-jscrambler
 
    Windows
    -------
-   > jscrambler.bat c:\your\configuration\file.json
+   > php jscrambler c:\your\configuration\file.json
 
    OR
 
